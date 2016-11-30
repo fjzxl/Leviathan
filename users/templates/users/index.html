@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>首页</title>
 </head>
-<body>
+<br>
     {% if username %}
          你好，{{ username }}
         <a href="{% url 'users:logout' %}">注销</a></br>
@@ -18,14 +18,15 @@
     <a href="?province={{ province }}">{{ province }}</a>
     {% endfor %}
     </br>
+    </br>选择城市</br>
     {% if cities %}
-        </br>选择城市</br>
         {% for city in cities %}
-             <a href="?city={{ city }}">{{ city }}</a>
+{#            BUG here 首页直接点击市区会出错 由于这个&#}
+             <a href="{{ request.get_full_path }}&city={{ city }}">{{ city }}</a>
         {% endfor %}
     {% endif %}
+    </br>选择医院</br>
     {% if hospitals %}
-        </br>选择医院</br>
         {% for hospital in hospitals %}
             <a href="{% url 'users:hospital' %}?hospital_id={{ hospital.id_hospital }}">{{ hospital.name }}</a>
         {% endfor %}

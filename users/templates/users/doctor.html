@@ -11,6 +11,7 @@
 {% else %}
     <a href="{% url 'users:login' %}">登录</a></br>
 {% endif %}
+<a href="{% url 'users:index' %}">首页</a></br>
 {% if doctor %}
     {% if doctor.picture %}
         {% load static %}

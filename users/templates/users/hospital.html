@@ -10,6 +10,7 @@
 {% else %}
     <a href="{% url 'users:login' %}">登录</a></br>
 {% endif %}
+<a href="{% url 'users:index' %}">首页</a></br>
 {{ hospital.name }} </br>
 {{ hospital.level }} </br>
 电话:{{ hospital.telephone }} </br>

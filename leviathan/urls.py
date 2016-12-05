@@ -22,9 +22,5 @@ urlpatterns = [
     url(r'^users/',include('users.urls',namespace='user')),
     url(r'^publisher/', include('publisher.urls',namespace='publisher')),
     url(r'^admin/', admin.site.urls),
-<<<<<<< HEAD
     url(r'^receptor/',include('receptor.urls',namespace='receptor')),
-=======
-    url(r'^receptor/',include('receptor.urls')),
->>>>>>> 65696f0a8aa6d1c86250a951e2179c3821640815
 ]

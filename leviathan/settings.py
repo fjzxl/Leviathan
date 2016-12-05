@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'receptor',
 ]
 
 MIDDLEWARE = [
@@ -80,9 +79,9 @@ WSGI_APPLICATION = 'leviathan.wsgi.application'
 DATABASES = {
     'default': {
 	    'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Leviathan',
+        'NAME': 'leviathan',
         'USER': 'leviathan',
-        'PASSWORD': 'leviathan',
+        'PASSWORD': 'passwd',
         'HOST': '127.0.0.1',
         'PORT': '3306',
 

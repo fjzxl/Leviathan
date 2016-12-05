@@ -29,7 +29,7 @@ def register(request):
             return render(request, 'receptor/register.html', {'form': form, 'error_message': '请输入正确信息!'})
     else:
         form = RegisterForm()
-        return render(request, 'ureceptor/register.html', {'form': form})
+        return render(request, 'receptor/register.html', {'form': form})
 
 def login(request):
     if request.method == 'POST':

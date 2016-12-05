@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+     <script>
+    function confirmAppointment(name,id_appointment)
+    {
+        test=window.confirm("确认"+name+"预约");
+        if(test==true){
+            window.open("../confirmAppointments/?id="+id_appointment)
+        }
+
+    }
+    function searchPatient(name)
+    {
+        window.open("../patient/"+name)
+    }
+    </script>
 </head>
 <body>
  <table>

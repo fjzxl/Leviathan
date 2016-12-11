@@ -23,11 +23,8 @@ def register(request):
                 return render(request, 'receptor/register.html', {'form': form, 'error_message': '两次密码输入不一致!'})
             else:
                 addUser(form)
-<<<<<<< HEAD
+
                 return redirect('/receptor/login')
-=======
-                return HttpResponse('注册成功')
->>>>>>> fd73ce76633372f2b9e0f442082ae1bc4837857b
         else:
             form = RegisterForm()
             return render(request, 'receptor/register.html', {'form': form, 'error_message': '请输入正确信息!'})

@@ -66,23 +66,21 @@ License: You must have a valid license purchased only from themeforest(the above
 		<h3 class="form-title">分诊台 登陆</h3>
 		<div class="alert alert-danger display-hide">
 			<button class="close" data-close="alert"></button>
-			<span>{% if error_message%}{{ error_message}}{% endif %}
+			<span>
+            请输入正确用户名和密码
             </span>
 		</div>
-
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-            <label class="control-label visible-ie8 visible-ie9">用户名</label>
-			{{ form.username }}
+			<p align="center">用户名{{ form.username }}</p>
 
 		</div>
 		<div class="form-group">
-			<label class="control-label visible-ie8 visible-ie9">密码</label>
-            {{ form.password }}
+			<p align="center">密 码{{ form.password }}</p>
 
         </div>
          {% csrf_token %}
-		<div class="form-actions" >
+		<div class="form-actions" align="center">
 			<button type="submit" class="btn btn-success uppercase" >登陆</button>
 			
 		</div>
@@ -139,3 +137,4 @@ jQuery(document).ready(function() {
 </body>
 <!-- END BODY -->
 </html>
+

@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 import os
 import sys
+from apscheduler.schedulers.background import BackgroundScheduler
+from utils import task
+
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "leviathan.settings")
@@ -19,4 +22,10 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
+    sched = BackgroundScheduler()
+    sched.add_job(task, 'cron', day='*', hour='19', minute='3',second='30')
+    sched.start()
+
     execute_from_command_line(sys.argv)
+
+

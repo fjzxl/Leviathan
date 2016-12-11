@@ -42,6 +42,10 @@ def addUser(form):
     data = form.cleaned_data
     hospitalID=models.Hospital.objects.get(name=data['hospital'])
     receptor = models.Adminreceptor.objects.create(loginname=data['username'], password=data['password'],
+<<<<<<< HEAD
                                             createtime=datetime.datetime.now(), id_hospital=hospitalID)
+=======
+                                            createtime=datetime.datetime.now(), id_hospital=hospitalID.id_hospital)
+>>>>>>> fd73ce76633372f2b9e0f442082ae1bc4837857b
     receptor.save()
 

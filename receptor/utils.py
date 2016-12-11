@@ -32,7 +32,7 @@ def findAppByUser(name):
     patientList=list(models.Patient.objects.filter(name=name))
     appDicList=[]
     for i in patientList:
-        appointmentsList=models.Appointment.objects.filter(id_patient=i.id_patient).filter(registrationtime__isnull=True)
+        appointmentsList=list(models.Appointment.objects.filter(id_patient=i.id_patient).filter(registrationtime__isnull=True))
         for j in appointmentsList :
             appDic={'anAppointment':j,'patient':j.id_patient,'bulletin':j.id_bulletin}
             appDicList.append(appDic)
@@ -40,6 +40,8 @@ def findAppByUser(name):
 
 def addUser(form):
     data = form.cleaned_data
+    hospitalID=models.Hospital.objects.get(name=data['hospital'])
     receptor = models.Adminreceptor.objects.create(loginname=data['username'], password=data['password'],
-                                            createtime=datetime.datetime.now(), id_hospital=data['hospital'])
+                                            createtime=datetime.datetime.now(), id_hospital=hospitalID.id_hospital)
     receptor.save()
+

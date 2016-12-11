@@ -10,9 +10,9 @@ import datetime
 
 def index(request):
     if request.session.get('isLogin', False):
-        return render(request,'receptor/index.html',{'username':request.session['userName']})
+        return redirect('/receptor/appointments')
     else:
-        return render(request, 'receptor/index.html',{'username':False})
+        return redirect('/receptor/login')
 
 def register(request):
     if request.method == 'POST':
@@ -23,13 +23,13 @@ def register(request):
                 return render(request, 'receptor/register.html', {'form': form, 'error_message': '两次密码输入不一致!'})
             else:
                 addUser(form)
-                return render(request, 'receptor/regsuccess.html')
+                return HttpResponse('注册成功')
         else:
             form = RegisterForm()
             return render(request, 'receptor/register.html', {'form': form, 'error_message': '请输入正确信息!'})
     else:
         form = RegisterForm()
-        return render(request, 'ureceptor/register.html', {'form': form})
+        return render(request, 'receptor/register.html', {'form': form})
 
 def login(request):
     if request.method == 'POST':
@@ -44,7 +44,7 @@ def login(request):
             request.session['userId']=user.id_adminreceptor
             request.session['userName']=user.loginname
             request.session['isLogin']=True
-            return HttpResponse("success")
+            return redirect('/receptor/')
         else:
             form = LoginForm()
             return render(request, 'receptor/login.html', {'form': form, 'error_message': '用户名或密码不正确'})
@@ -63,34 +63,36 @@ def showAppoint(request,param1):
         userId = request.session['userId']
         appointments = findAppByRP(userId)
         if param1 is not None:
-            if (param1.lower()=="toshow"):
-                return render(request, 'receptor/ToShow.html', {'appointments': appointments})
-            elif (param1.lower()=='isshowned') :
-                return render(request, 'receptor/appointmentsIsShowned.html', {'appointments': appointments})
+            if (param1.lower()=="absent"):
+                return render(request, 'receptor/absent.html', {'appointments': appointments,'username':request.session['userName']})
+            elif (param1.lower()=='present') :
+                return render(request, 'receptor/present.html', {'appointments': appointments,'username':request.session['userName']})
             else:
-                return render(request, 'receptor/showAppointments.html', {'appointments': appointments})
+                return render(request, 'receptor/all.html', {'appointments': appointments,'username':request.session['userName']})
         else:
-            return render(request, 'receptor/showAppointments.html', {'appointments': appointments})
+            return render(request, 'receptor/all.html', {'appointments': appointments,'username':request.session['userName']})
     else:
         form = LoginForm()
         return redirect('/receptor/login', {'form': form, 'error_message': '请登录'})
 
-def showPatient(request,name):
-    if request.session.get('isLogin', False):
-        appointments=findAppByUser(name)
-        return render(request,'receptor/patient.html',{'appointments':appointments})
-    else:
-        form = LoginForm()
-        return redirect('/receptor/login', {'form': form, 'error_message': '请登录'})
 
 def confirmAppointment(request):
     if request.session.get('isLogin',False):
         id=request.GET['id']
         appointment=models.Appointment.objects.get(id_appointment=id)
+        patient=appointment.id_patient
+        bulletin=appointment.id_bulletin
         appointment.ispaid=True
         appointment.registrationtime=datetime.datetime.now()
         appointment.save(force_update=True)
-        return  render(request,'receptor/confirmAppointment.html',{'time':appointment.registrationtime})
+
+        temp=bulletin.id_doctor_department
+        doctor=temp.id_doctor
+        department=temp.id_department
+        hospital=department.id_hospital
+        now=datetime.datetime.now()
+        info={'patient':patient,'idOfAppointment':id,'time':bulletin.availabletime,'now':now,'doctor':doctor,'department':department,'hospital':hospital}
+        return  render(request,'receptor/printAppointment.html',{'info':info})
 
 def printAppointment(request):
     return render(request,'receptor/printAppointment.html')
